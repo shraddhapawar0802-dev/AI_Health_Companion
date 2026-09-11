@@ -1,0 +1,107 @@
+{
+  "hba1c": {
+    "label_en": "HbA1c",
+    "label_hi": "एचबीए1सी (औसत ब्लड शुगर)",
+    "unit": "%",
+    "aliases": ["hba1c", "hb a1c", "glycated haemoglobin", "glycated hemoglobin"],
+    "bands": [
+      {"max": 5.7, "category": "normal", "color": "green"},
+      {"max": 6.5, "category": "borderline", "color": "yellow"},
+      {"max": 999, "category": "high", "color": "red"}
+    ]
+  },
+  "fasting_glucose": {
+    "label_en": "Fasting Blood Glucose",
+    "label_hi": "फास्टिंग ब्लड शुगर",
+    "unit": "mg/dL",
+    "aliases": ["fasting glucose", "fbs", "fasting blood sugar", "fasting sugar"],
+    "low_cutoff": 70,
+    "bands": [
+      {"max": 99, "category": "normal", "color": "green"},
+      {"max": 125, "category": "borderline", "color": "yellow"},
+      {"max": 999, "category": "high", "color": "red"}
+    ]
+  },
+  "pp_glucose": {
+    "label_en": "Post-Meal (PP) Blood Glucose",
+    "label_hi": "खाने के बाद ब्लड शुगर (पीपी)",
+    "unit": "mg/dL",
+    "aliases": ["pp glucose", "post prandial", "postprandial", "pp blood sugar", "pp sugar"],
+    "low_cutoff": 70,
+    "bands": [
+      {"max": 140, "category": "normal", "color": "green"},
+      {"max": 199, "category": "borderline", "color": "yellow"},
+      {"max": 999, "category": "high", "color": "red"}
+    ]
+  },
+  "bp_systolic": {
+    "label_en": "Blood Pressure (Systolic)",
+    "label_hi": "ब्लड प्रेशर (ऊपर वाला अंक)",
+    "unit": "mmHg",
+    "aliases": ["systolic", "bp systolic", "sbp"],
+    "bands": [
+      {"max": 119, "category": "normal", "color": "green"},
+      {"max": 139, "category": "borderline", "color": "yellow"},
+      {"max": 179, "category": "high", "color": "red"},
+      {"max": 999, "category": "emergency", "color": "darkred"}
+    ]
+  },
+  "bp_diastolic": {
+    "label_en": "Blood Pressure (Diastolic)",
+    "label_hi": "ब्लड प्रेशर (नीचे वाला अंक)",
+    "unit": "mmHg",
+    "aliases": ["diastolic", "bp diastolic", "dbp"],
+    "bands": [
+      {"max": 79, "category": "normal", "color": "green"},
+      {"max": 89, "category": "borderline", "color": "yellow"},
+      {"max": 119, "category": "high", "color": "red"},
+      {"max": 999, "category": "emergency", "color": "darkred"}
+    ]
+  },
+  "hemoglobin": {
+    "label_en": "Hemoglobin",
+    "label_hi": "हीमोग्लोबिन",
+    "unit": "g/dL",
+    "aliases": ["hemoglobin", "haemoglobin", "hb"],
+    "low_is_bad": true,
+    "bands": [
+      {"max": 7.9, "category": "emergency", "color": "darkred"},
+      {"max": 9.9, "category": "high", "color": "red"},
+      {"max": 11.9, "category": "borderline", "color": "yellow"},
+      {"max": 999, "category": "normal", "color": "green"}
+    ]
+  },
+  "creatinine": {
+    "label_en": "Serum Creatinine",
+    "label_hi": "सीरम क्रिएटिनिन (किडनी टेस्ट)",
+    "unit": "mg/dL",
+    "aliases": ["creatinine", "serum creatinine"],
+    "bands": [
+      {"max": 1.3, "category": "normal", "color": "green"},
+      {"max": 2.0, "category": "borderline", "color": "yellow"},
+      {"max": 999, "category": "high", "color": "red"}
+    ]
+  },
+  "cholesterol": {
+    "label_en": "Total Cholesterol",
+    "label_hi": "कुल कोलेस्ट्रॉल",
+    "unit": "mg/dL",
+    "aliases": ["cholesterol", "total cholesterol"],
+    "bands": [
+      {"max": 199, "category": "normal", "color": "green"},
+      {"max": 239, "category": "borderline", "color": "yellow"},
+      {"max": 999, "category": "high", "color": "red"}
+    ]
+  },
+  "tsh": {
+    "label_en": "TSH (Thyroid)",
+    "label_hi": "टीएसएच (थायरॉइड)",
+    "unit": "mIU/L",
+    "aliases": ["tsh"],
+    "bands": [
+      {"max": 0.39, "category": "borderline", "color": "yellow"},
+      {"max": 4.0, "category": "normal", "color": "green"},
+      {"max": 999, "category": "borderline", "color": "yellow"}
+    ]
+  }
+}

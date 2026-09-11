@@ -1,0 +1,514 @@
+[
+  {
+    "brand": "Crocin",
+    "generic": "Paracetamol",
+    "strengths": [
+      "500 mg",
+      "650 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "crocin",
+      "crocin advance"
+    ],
+    "brand_mrp": 32,
+    "ja_mrp": 6,
+    "savings_pct": 81
+  },
+  {
+    "brand": "Dolo 650",
+    "generic": "Paracetamol",
+    "strengths": [
+      "650 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "dolo",
+      "dolo 650",
+      "dolo650"
+    ],
+    "brand_mrp": 34,
+    "ja_mrp": 6,
+    "savings_pct": 82
+  },
+  {
+    "brand": "Calpol",
+    "generic": "Paracetamol",
+    "strengths": [
+      "500 mg"
+    ],
+    "form": "tablet/syrup",
+    "aliases": [
+      "calpol"
+    ],
+    "brand_mrp": 31,
+    "ja_mrp": 5,
+    "savings_pct": 84
+  },
+  {
+    "brand": "Combiflam",
+    "generic": "Ibuprofen + Paracetamol",
+    "strengths": [
+      "400 mg + 325 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "combiflam"
+    ],
+    "brand_mrp": 46,
+    "ja_mrp": 9,
+    "savings_pct": 80
+  },
+  {
+    "brand": "Augmentin",
+    "generic": "Amoxicillin + Clavulanic acid",
+    "strengths": [
+      "625 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "augmentin"
+    ],
+    "brand_mrp": 215,
+    "ja_mrp": 55,
+    "savings_pct": 74
+  },
+  {
+    "brand": "Amoxil",
+    "generic": "Amoxicillin",
+    "strengths": [
+      "500 mg"
+    ],
+    "form": "capsule",
+    "aliases": [
+      "amoxil"
+    ],
+    "brand_mrp": 85,
+    "ja_mrp": 22,
+    "savings_pct": 74
+  },
+  {
+    "brand": "Azithral",
+    "generic": "Azithromycin",
+    "strengths": [
+      "500 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "azithral",
+      "azee"
+    ],
+    "brand_mrp": 125,
+    "ja_mrp": 35,
+    "savings_pct": 72
+  },
+  {
+    "brand": "Ciplox",
+    "generic": "Ciprofloxacin",
+    "strengths": [
+      "500 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "ciplox",
+      "cifran"
+    ],
+    "brand_mrp": 52,
+    "ja_mrp": 14,
+    "savings_pct": 73
+  },
+  {
+    "brand": "Norflox",
+    "generic": "Norfloxacin",
+    "strengths": [
+      "400 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "norflox"
+    ],
+    "brand_mrp": 68,
+    "ja_mrp": 16,
+    "savings_pct": 76
+  },
+  {
+    "brand": "Pantocid",
+    "generic": "Pantoprazole",
+    "strengths": [
+      "40 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "pantocid",
+      "pantop"
+    ],
+    "brand_mrp": 98,
+    "ja_mrp": 15,
+    "savings_pct": 85
+  },
+  {
+    "brand": "Omez",
+    "generic": "Omeprazole",
+    "strengths": [
+      "20 mg"
+    ],
+    "form": "capsule",
+    "aliases": [
+      "omez"
+    ],
+    "brand_mrp": 62,
+    "ja_mrp": 11,
+    "savings_pct": 82
+  },
+  {
+    "brand": "Rantac",
+    "generic": "Ranitidine",
+    "strengths": [
+      "150 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "rantac"
+    ],
+    "brand_mrp": 42,
+    "ja_mrp": 8,
+    "savings_pct": 81
+  },
+  {
+    "brand": "Digene",
+    "generic": "Antacid (Aluminium + Magnesium hydroxide)",
+    "strengths": [
+      "standard"
+    ],
+    "form": "tablet/gel",
+    "aliases": [
+      "digene"
+    ],
+    "brand_mrp": 55,
+    "ja_mrp": 12,
+    "savings_pct": 78
+  },
+  {
+    "brand": "Glycomet",
+    "generic": "Metformin",
+    "strengths": [
+      "500 mg",
+      "850 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "glycomet",
+      "metformin"
+    ],
+    "brand_mrp": 48,
+    "ja_mrp": 9,
+    "savings_pct": 81
+  },
+  {
+    "brand": "Glucophage",
+    "generic": "Metformin",
+    "strengths": [
+      "500 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "glucophage"
+    ],
+    "brand_mrp": 52,
+    "ja_mrp": 9,
+    "savings_pct": 83
+  },
+  {
+    "brand": "Amaryl",
+    "generic": "Glimepiride",
+    "strengths": [
+      "1 mg",
+      "2 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "amaryl"
+    ],
+    "brand_mrp": 110,
+    "ja_mrp": 14,
+    "savings_pct": 87
+  },
+  {
+    "brand": "Januvia",
+    "generic": "Sitagliptin",
+    "strengths": [
+      "100 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "januvia"
+    ],
+    "brand_mrp": 380,
+    "ja_mrp": 65,
+    "savings_pct": 83
+  },
+  {
+    "brand": "Losar",
+    "generic": "Losartan",
+    "strengths": [
+      "50 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "losar",
+      "losartan"
+    ],
+    "brand_mrp": 95,
+    "ja_mrp": 13,
+    "savings_pct": 86
+  },
+  {
+    "brand": "Amlodac",
+    "generic": "Amlodipine",
+    "strengths": [
+      "5 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "amlodac",
+      "amlopres",
+      "amlodipine"
+    ],
+    "brand_mrp": 38,
+    "ja_mrp": 6,
+    "savings_pct": 84
+  },
+  {
+    "brand": "Telma",
+    "generic": "Telmisartan",
+    "strengths": [
+      "40 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "telma"
+    ],
+    "brand_mrp": 118,
+    "ja_mrp": 14,
+    "savings_pct": 88
+  },
+  {
+    "brand": "Ecosprin",
+    "generic": "Aspirin",
+    "strengths": [
+      "75 mg",
+      "150 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "ecosprin"
+    ],
+    "brand_mrp": 22,
+    "ja_mrp": 5,
+    "savings_pct": 77
+  },
+  {
+    "brand": "Atorva",
+    "generic": "Atorvastatin",
+    "strengths": [
+      "10 mg",
+      "20 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "atorva",
+      "storvas"
+    ],
+    "brand_mrp": 112,
+    "ja_mrp": 12,
+    "savings_pct": 89
+  },
+  {
+    "brand": "Thyronorm",
+    "generic": "Levothyroxine",
+    "strengths": [
+      "25 mcg",
+      "50 mcg",
+      "100 mcg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "thyronorm",
+      "eltroxin"
+    ],
+    "brand_mrp": 165,
+    "ja_mrp": 38,
+    "savings_pct": 77
+  },
+  {
+    "brand": "Cetzine",
+    "generic": "Cetirizine",
+    "strengths": [
+      "10 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "cetzine",
+      "cetrizine"
+    ],
+    "brand_mrp": 35,
+    "ja_mrp": 6,
+    "savings_pct": 83
+  },
+  {
+    "brand": "Allegra",
+    "generic": "Fexofenadine",
+    "strengths": [
+      "120 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "allegra"
+    ],
+    "brand_mrp": 195,
+    "ja_mrp": 42,
+    "savings_pct": 78
+  },
+  {
+    "brand": "Voveran",
+    "generic": "Diclofenac",
+    "strengths": [
+      "50 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "voveran"
+    ],
+    "brand_mrp": 48,
+    "ja_mrp": 8,
+    "savings_pct": 83
+  },
+  {
+    "brand": "Brufen",
+    "generic": "Ibuprofen",
+    "strengths": [
+      "400 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "brufen"
+    ],
+    "brand_mrp": 42,
+    "ja_mrp": 8,
+    "savings_pct": 81
+  },
+  {
+    "brand": "Meftal",
+    "generic": "Mefenamic acid",
+    "strengths": [
+      "500 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "meftal",
+      "meftal-spas"
+    ],
+    "brand_mrp": 56,
+    "ja_mrp": 11,
+    "savings_pct": 80
+  },
+  {
+    "brand": "Zerodol",
+    "generic": "Aceclofenac",
+    "strengths": [
+      "100 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "zerodol"
+    ],
+    "brand_mrp": 65,
+    "ja_mrp": 12,
+    "savings_pct": 82
+  },
+  {
+    "brand": "Deriphyllin",
+    "generic": "Theophylline + Etophylline",
+    "strengths": [
+      "standard"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "deriphyllin"
+    ],
+    "brand_mrp": 38,
+    "ja_mrp": 7,
+    "savings_pct": 82
+  },
+  {
+    "brand": "Asthalin",
+    "generic": "Salbutamol",
+    "strengths": [
+      "100 mcg inhaler / 2 mg tablet"
+    ],
+    "form": "inhaler/tablet",
+    "aliases": [
+      "asthalin"
+    ],
+    "brand_mrp": 145,
+    "ja_mrp": 45,
+    "savings_pct": 69
+  },
+  {
+    "brand": "Wysolone",
+    "generic": "Prednisolone",
+    "strengths": [
+      "5 mg",
+      "10 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "wysolone"
+    ],
+    "brand_mrp": 28,
+    "ja_mrp": 6,
+    "savings_pct": 79
+  },
+  {
+    "brand": "Betnesol",
+    "generic": "Betamethasone",
+    "strengths": [
+      "0.5 mg"
+    ],
+    "form": "tablet",
+    "aliases": [
+      "betnesol"
+    ],
+    "brand_mrp": 22,
+    "ja_mrp": 5,
+    "savings_pct": 77
+  },
+  {
+    "brand": "Lantus",
+    "generic": "Insulin glargine",
+    "strengths": [
+      "100 IU/mL"
+    ],
+    "form": "injection",
+    "aliases": [
+      "lantus"
+    ],
+    "brand_mrp": 750,
+    "ja_mrp": 210,
+    "savings_pct": 72
+  },
+  {
+    "brand": "Novorapid",
+    "generic": "Insulin aspart",
+    "strengths": [
+      "100 IU/mL"
+    ],
+    "form": "injection",
+    "aliases": [
+      "novorapid"
+    ],
+    "brand_mrp": 680,
+    "ja_mrp": 195,
+    "savings_pct": 71
+  }
+]

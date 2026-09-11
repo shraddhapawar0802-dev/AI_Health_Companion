@@ -1,0 +1,145 @@
+[
+  {
+    "pair": [
+      "Paracetamol",
+      "Paracetamol"
+    ],
+    "type": "duplicate_ingredient",
+    "severity": "high",
+    "message_en": "Two different brands both contain Paracetamol. Taking both can accidentally cross the safe daily limit.",
+    "message_hi": "दो अलग-अलग दवाओं में Paracetamol है। दोनों साथ लेने से मात्रा ज़रूरत से ज़्यादा हो सकती है।",
+    "action": "Do not take both without checking with a pharmacist or doctor."
+  },
+  {
+    "pair": [
+      "Aspirin",
+      "Ibuprofen"
+    ],
+    "type": "nsaid_aspirin",
+    "severity": "moderate",
+    "message_en": "Ibuprofen can reduce the heart-protective effect of low-dose Aspirin and raise bleeding risk.",
+    "message_hi": "Ibuprofen, Aspirin के heart-protection असर को कम कर सकता है और bleeding का खतरा बढ़ा सकता है।",
+    "action": "Ask your doctor about spacing the doses or an alternative painkiller."
+  },
+  {
+    "pair": [
+      "Aspirin",
+      "Diclofenac"
+    ],
+    "type": "nsaid_aspirin",
+    "severity": "moderate",
+    "message_en": "Combining Aspirin with Diclofenac increases the risk of stomach irritation and bleeding.",
+    "message_hi": "Aspirin और Diclofenac साथ लेने से पेट में जलन और bleeding का खतरा बढ़ता है।",
+    "action": "Consult your doctor before continuing both together."
+  },
+  {
+    "pair": [
+      "Losartan",
+      "Ibuprofen"
+    ],
+    "type": "nsaid_arb",
+    "severity": "moderate",
+    "message_en": "NSAIDs like Ibuprofen can reduce how well Losartan controls blood pressure and may affect the kidneys.",
+    "message_hi": "Ibuprofen जैसी दवाएं Losartan का blood pressure control कमज़ोर कर सकती हैं और किडनी पर असर डाल सकती हैं।",
+    "action": "Avoid regular use together without medical advice."
+  },
+  {
+    "pair": [
+      "Telmisartan",
+      "Diclofenac"
+    ],
+    "type": "nsaid_arb",
+    "severity": "moderate",
+    "message_en": "NSAIDs like Diclofenac can reduce how well Telmisartan controls blood pressure and may affect the kidneys.",
+    "message_hi": "Diclofenac जैसी दवाएं Telmisartan का blood pressure control कमज़ोर कर सकती हैं और किडनी पर असर डाल सकती हैं।",
+    "action": "Avoid regular use together without medical advice."
+  },
+  {
+    "pair": [
+      "Ciprofloxacin",
+      "Antacid (Aluminium + Magnesium hydroxide)"
+    ],
+    "type": "absorption",
+    "severity": "moderate",
+    "message_en": "Antacids can block the body from absorbing Ciprofloxacin properly, making it less effective.",
+    "message_hi": "Antacid लेने से Ciprofloxacin शरीर में ठीक से absorb नहीं होती और असर कम हो जाता है।",
+    "action": "Take Ciprofloxacin at least 2 hours before or after the antacid."
+  },
+  {
+    "pair": [
+      "Levothyroxine",
+      "Antacid (Aluminium + Magnesium hydroxide)"
+    ],
+    "type": "absorption",
+    "severity": "moderate",
+    "message_en": "Antacids can reduce absorption of Levothyroxine, making the thyroid medicine less effective.",
+    "message_hi": "Antacid लेने से Levothyroxine का असर कम हो सकता है।",
+    "action": "Space the two medicines at least 4 hours apart."
+  },
+  {
+    "pair": [
+      "Glimepiride",
+      "Sitagliptin"
+    ],
+    "type": "hypoglycemia",
+    "severity": "moderate",
+    "message_en": "Combining these two diabetes medicines increases the risk of blood sugar dropping too low (hypoglycemia).",
+    "message_hi": "ये दोनों diabetes की दवाएं साथ लेने से blood sugar बहुत कम (hypoglycemia) होने का खतरा बढ़ता है।",
+    "action": "Watch for shakiness, sweating or dizziness and confirm the combination with your doctor."
+  },
+  {
+    "pair": [
+      "Insulin glargine",
+      "Glimepiride"
+    ],
+    "type": "hypoglycemia",
+    "severity": "high",
+    "message_en": "Insulin with a sulfonylurea like Glimepiride raises the risk of dangerously low blood sugar.",
+    "message_hi": "Insulin के साथ Glimepiride लेने से blood sugar बहुत कम होने का खतरा बढ़ जाता है।",
+    "action": "This combination needs close doctor supervision."
+  },
+  {
+    "pair": [
+      "Prednisolone",
+      "Ibuprofen"
+    ],
+    "type": "steroid_nsaid",
+    "severity": "moderate",
+    "message_en": "Steroids combined with NSAIDs like Ibuprofen increase the risk of stomach ulcers.",
+    "message_hi": "Steroid और Ibuprofen साथ लेने से पेट में ulcer होने का खतरा बढ़ता है।",
+    "action": "Ask your doctor about a stomach-protecting medicine if both are needed."
+  },
+  {
+    "pair": [
+      "Betamethasone",
+      "Diclofenac"
+    ],
+    "type": "steroid_nsaid",
+    "severity": "moderate",
+    "message_en": "Steroids combined with NSAIDs like Diclofenac increase the risk of stomach ulcers.",
+    "message_hi": "Steroid और Diclofenac साथ लेने से पेट में ulcer होने का खतरा बढ़ता है।",
+    "action": "Ask your doctor about a stomach-protecting medicine if both are needed."
+  },
+  {
+    "pair": [
+      "Theophylline + Etophylline",
+      "Azithromycin"
+    ],
+    "type": "theophylline_toxicity",
+    "severity": "moderate",
+    "message_en": "Azithromycin can raise Theophylline levels in the blood, increasing the risk of side effects.",
+    "message_hi": "Azithromycin, Theophylline का blood level बढ़ा सकता है जिससे side effect का खतरा बढ़ता है।",
+    "action": "Inform your doctor if you feel nausea, tremors or a fast heartbeat."
+  },
+  {
+    "pair": [
+      "Theophylline + Etophylline",
+      "Ciprofloxacin"
+    ],
+    "type": "theophylline_toxicity",
+    "severity": "moderate",
+    "message_en": "Ciprofloxacin can raise Theophylline levels in the blood, increasing the risk of side effects.",
+    "message_hi": "Ciprofloxacin, Theophylline का blood level बढ़ा सकता है जिससे side effect का खतरा बढ़ता है।",
+    "action": "Inform your doctor if you feel nausea, tremors or a fast heartbeat."
+  }
+]
