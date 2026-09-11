@@ -1,114 +1,82 @@
-# AI Health Companion (SIH 2026) — Feature Specification (SPEC.md)
+# AI Health Companion (SIH 2026) — Final Specification (SPEC.md)
 
-## Overview & Background
-This specification defines the 4 requested enhancements for the **AI Health Companion** (SIH 2026) prototype (live at `https://ai-health-companion-mh55.onrender.com/`), ensuring zero regression to existing functional systems (**Voice Assistant is strictly preserved and untouched**, OCR pipeline, SQLite/data stores, and Analytics dashboard remain intact).
-
----
-
-## 1. Feature 1: MedTrace Prescription-Check & Drug Interaction Pipeline
-### Objective
-Automatically analyze extracted prescription medicines for dangerous drug-drug interactions, duplicate active molecules, and patient contraindications immediately following OCR or manual entry.
-
-### Changes & Architecture
-1. **Prescription OCR to MedTrace Integration**:
-   - In `app.py`: `/api/ocr` and `/api/parse-report-text` already detect medicines. Enhance the response to return fully computed `medicine_safety` containing:
-     - Pairwise interaction warnings from curated `interactions.json` (severity: high/moderate/low, mechanism, recommendations).
-     - Duplicate active ingredient alerts (e.g. Paracetamol overdose risk from Dolo + Crocin).
-     - Multi-NSAID alerts (e.g. Brufen + Voveran).
-     - Contraindications with patient age, pregnancy, kidney conditions, and allergies.
-   - In `templates/index.html`:
-     - Inside `renderFullReport(parsedReport, medicineSafety)`: Add a dedicated, beautifully styled **"MedTrace Rx Safety & Drug Interaction Analysis"** block directly underneath the Prescribed Medicines section.
-     - Render:
-       - **Overall Combination Safety Verdict** (🚨 HIGH RISK / CONTRAINDICATED, ⚠️ CAUTION, ✅ SAFE COMBINATION).
-       - **Duplicate Molecule Alerts**: Highlights shared active salts to prevent accidental toxicity.
-       - **Pairwise Interaction Cards**: Displays interacting drug pairs, clinical severity badge, interaction mechanism, and clear guidance in the active language (MR/HI/EN).
-       - **Interactive CTA**: Button to "Open in MedTrace Lab" with 1-click auto-population into Tab 2 for deep parameter testing.
+## 1. Project Overview & Baseline Status
+- **Repository Baseline Commit**: `cacf9b0` (Initial working state) + `8bfa933` (app.py syntax verification)
+- **Live Reference**: `https://ai-health-companion-mh55.onrender.com`
+- **Tech Stack**: Python Flask (Backend), Vanilla HTML/CSS/JavaScript (Frontend). No new framework will be introduced.
+- **Preservation Policy**:
+  - **Voice Assistant**: The working Voice Assistant (`speakReport`, `speakAloud`, `startVoiceAssistant`, `stopVoiceAssistant`, `onVoiceCommand`, Web Speech API) will **NOT be touched, altered, or removed**.
+  - **Existing Features**: OCR pipeline (OpenCV + Tesseract), Dashboard, History, Competitor analysis, and Clinical references remain 100% functional.
+  - **Zero Regression**: Every addition runs with automated fallback if server is unreachable.
 
 ---
 
-## 2. Feature 2: Explainable Risk Reasoning for Disease Predictions
-### Objective
-Provide clear, transparent, Explainable AI (XAI) reasoning for all 3 disease risk assessments (Diabetes, Heart CVD, Kidney Health) showing *why* a risk score was assigned and *which* factors contributed.
+## 2. Exact Files to be Modified / Added
 
-### Changes & Architecture
-1. **Backend Explainability Engine (`app.py`)**:
-   - Update `screen_disease_risk(age, gender, bmi_cat, bp_cat, glucose_cat, activity)` to return:
-     - `score`: Indicative percentage (0-95%).
-     - `level`: low / moderate / high.
-     - `contributing_factors`: List of active risk drivers with factor name, point impact (e.g., `+20 pts`), weight (`High` / `Moderate`), and clinical explanation in Marathi, Hindi, and English.
-     - `mitigating_factors`: Protective factors (e.g., active lifestyle, normal BMI).
-     - `modifiable_target`: The highest-impact modifiable factor (e.g., "Reducing BP below 130 can lower heart risk by ~20%").
-2. **Frontend UI Rendering (`templates/index.html`)**:
-   - In `tab-risk`, replace static single-line descriptions with an **"Explainable Risk Reasoning" breakdown card**:
-     - Visual factor chips with impact badges (🔴 High Impact, 🟠 Moderate Impact, 🟢 Low/Protective).
-     - "Why this score?" collapsible or inline reasoning section.
-     - Dynamic translation in Marathi, Hindi, and English.
-   - Update client-side `calculateRisk()` and backend `/api/risk-screen` to keep both offline on-device and server-verified calculations completely in sync.
+### File 1: [MODIFY] `app.py`
+- **Purpose**:
+  1. Return enriched `medicine_safety` automatically in `/api/ocr` and `/api/parse-report-text` with pairwise drug-drug interactions, duplicate molecule warnings, and patient contraindications.
+  2. Enhance `screen_disease_risk` and `/api/risk-screen` with **Explainable AI (XAI) Risk Factors breakdown**:
+     - `contributing_factors`: List of active drivers with points (e.g. `+20 pts`), severity weight, and clinical reason in Marathi, Hindi, and English.
+     - `mitigating_factors`: Protective factors (e.g. active lifestyle).
+     - `modifiable_target`: Primary recommended change to reduce risk score.
+  3. Add severe symptom recognition patterns in clinical notes/impressions (e.g., severe chest pain, radiating arm pain, breathlessness at rest, hemoptysis, stroke FAST signs).
 
----
+### File 2: [MODIFY] `templates/index.html`
+- **Purpose**:
+  1. **MedTrace Prescription-Check Merge**:
+     - In `renderFullReport()`: Add a dedicated **"MedTrace Rx Safety & Drug Interaction Analysis"** box immediately below extracted prescriptions.
+     - Render overall combination status (🚨 HIGH RISK / CONTRAINDICATED, ⚠️ CAUTION, ✅ SAFE), duplicate molecule warning (e.g. Paracetamol overdose risk), multi-NSAID warning, and pairwise interaction cards with mechanism and recommendations.
+     - Add 1-click CTA button to sync medicines into the MedTrace tab.
+  2. **Explainable Risk Reasoning UI**:
+     - In `tab-risk`, replace generic single-line descriptions with an **Explainable Risk Reasoning Breakdown card** for each disease (Diabetes, Heart CVD, Kidney):
+       - Visual factor chips with impact tags (🔴 High Contributor, 🟠 Moderate, 🟢 Protective/Normal).
+       - Plain-language causal explanation ("Why this score?").
+       - Modifiable target guidance in MR, HI, and EN.
+     - Update client-side `calculateRisk()` so explainable reasoning works seamlessly offline and during typing preview.
+  3. **High-Visibility Red-Flag Emergency Alert Banner**:
+     - Upgrade `#emergency-banner` into a prominent, high-contrast pulsing red warning banner.
+     - Automatically triggered on critical vitals (BP ≥ 180/120, SpO2 ≤ 89%, Sugar ≤ 55 or ≥ 300, HR > 130 or < 45, Creatinine ≥ 2.5), high-risk drug interactions, or severe clinical symptoms.
+     - Display active one-touch emergency call buttons:
+       - 📞 `108 रुग्णवाहिका (Call 108 Ambulance)`
+       - 📞 `112 राष्ट्रीय आपत्कालीन (Call 112 Emergency)`
+       - 🏥 `जवळचे रुग्णालय शोधा (Find Nearest Hospital)`
+  4. **Fully Functional Multilingual Toggle (Hindi / Marathi / English)**:
+     - Complete `I18N` dictionaries (`mr`, `hi`, `en`) for 100% of UI elements:
+       - All form labels, placeholder texts, and section headings.
+       - All dropdown `<select>` options: BMI categories, BP categories, Fasting Glucose categories, Activity levels.
+       - Explainable Risk Reasoning factor names and descriptions.
+       - MedTrace interaction warnings and emergency banner texts.
+     - Upgrade `setLanguage(lang)` to dynamically update dropdown options and re-render active reports, medicine checks, and risk screens without resetting user input.
 
-## 3. Feature 3: High-Visibility Red-Flag Emergency Alert Banner
-### Objective
-Make red-flag emergency alerts unmissable, prominent, and actionable whenever severe symptoms or critical lab/vital thresholds are detected.
-
-### Changes & Architecture
-1. **Critical Clinical Thresholds**:
-   - Severe Hypertensive Crisis: Systolic ≥ 180 or Diastolic ≥ 120 mmHg.
-   - Critical Hypoglycemia: Blood Glucose ≤ 55 mg/dL.
-   - Diabetic Ketoacidosis (DKA) / Hyperglycemic Hyperosmolar Risk: Glucose ≥ 300 mg/dL.
-   - Severe Hypoxemia: SpO2 ≤ 89%.
-   - Critical Kidney Strain: Creatinine ≥ 2.5 mg/dL.
-   - Critical Heart Rate: HR > 130 BPM (Tachycardia) or < 45 BPM (Severe Bradycardia).
-   - High-Risk Contraindicated Drug Interaction (e.g., Warfarin + NSAID / dual anticoagulation).
-   - Severe Symptoms detected in doctor notes / clinical text (e.g., chest pain radiating to arm/jaw, acute breathlessness at rest, sudden slurred speech / facial drooping, coughing blood).
-2. **High-Visibility Emergency Banner UI**:
-   - Modern, high-contrast emergency red banner with pulsing warning icon, thick crimson border, and prominent typography.
-   - Displays exact detected red flags as distinct highlighted alert badges.
-   - Direct Action Protocol: Clear first-aid guidance.
-   - **One-Touch Emergency Dialing**:
-     - `📞 108 रुग्णवाहिका (Call 108 Ambulance)`
-     - `📞 112 राष्ट्रीय आपत्कालीन (Call 112 Emergency)`
-     - `🏥 जवळचे आपत्कालीन केंद्र शोधा (Find Emergency Care)`
-   - Banner appears prominently at the top of the report and vitals views when triggered, with smooth dismiss or scroll-to action.
-
----
-
-## 4. Feature 4: Fully Functional Trilingual Toggle (Marathi / Hindi / English)
-### Objective
-Ensure that switching between Marathi, Hindi, and English instantly translates 100% of UI elements, form labels, select options, placeholders, dynamic result cards, and alert texts.
-
-### Changes & Architecture
-1. **Complete `I18N` Dictionary Coverage**:
-   - Expand `I18N.mr`, `I18N.hi`, and `I18N.en` to include:
-     - Form input labels and placeholder texts.
-     - `<select>` options:
-       - BMI dropdown (`opt-bmi-norm`, `opt-bmi-over`, `opt-bmi-obese`).
-       - Blood pressure categories (`opt-bp-norm`, `opt-bp-ele`, `opt-bp-high`).
-       - Fasting glucose categories (`opt-glu-norm`, `opt-glu-pre`, `opt-glu-diab`).
-       - Physical activity levels (`opt-act-high`, `opt-act-mod`, `opt-act-low`).
-     - Explainable Risk Reasoning factor names, labels, and descriptions.
-     - MedTrace prescription interaction headers, warnings, and badges.
-     - Emergency red-flag banner headlines, action instructions, and hotlines.
-2. **Enhanced `setLanguage(lang)` Function**:
-   - Update all static text nodes and innerHTML elements.
-   - Dynamically update all `<select>` option texts without resetting user selections.
-   - Re-render active results:
-     - Re-render parsed report & MedTrace drug interactions in the newly selected language.
-     - Re-render disease risk scores & explainable factor breakdowns in the newly selected language.
-     - Re-render medicine safety evaluation in the newly selected language.
-   - Persist selected language in `localStorage` so user preference is remembered across refreshes.
+### File 3: [NEW] `test_sih_features.py`
+- **Purpose**: Dedicated automated test script to verify:
+  1. MedTrace prescription OCR drug interaction detection (duplicate molecules, high-risk pairs).
+  2. Disease risk explainability factors and scoring logic.
+  3. Red-flag emergency alert trigger conditions.
+  4. Trilingual dictionary completeness (verifying no missing keys across `mr`, `hi`, `en`).
+  5. Preservation of existing endpoints (`/`, `/api/ocr`, `/api/medicines`, `/api/risk-screen`, etc.).
 
 ---
 
-## 5. Non-Negotiable Guardrails (Safety & Stability)
-- **Voice Assistant**: The Voice Assistant (`speakReport`, `speakAloud`, `startVoiceAssistant`, `stopVoiceAssistant`, `onVoiceCommand`, speech synthesis/recognition) will **NOT be touched or altered**.
-- **Existing OCR & Backend Routes**: OpenCV preprocessing, multi-pass Tesseract OCR, PDF parser, and Flask REST endpoints will remain fully backward-compatible.
-- **Offline / On-Device Capability**: All 4 features will support both server-verified responses and graceful in-browser fallback.
+## 3. Step-by-Step Implementation & Verification Plan
+1. **Step 1 — Backend updates (`app.py`)**:
+   - Implement explainable factors in `screen_disease_risk()` and severe symptom detection.
+   - Run `python -m py_compile app.py` and `python test_backend.py`.
+2. **Step 2 — Frontend UI updates (`templates/index.html`)**:
+   - Add MedTrace prescription safety section to Report view.
+   - Add Explainable Risk Reasoning breakdown cards to Health Risk tab.
+   - Style and activate High-Visibility Red-Flag Emergency Banner with emergency call buttons.
+   - Complete `I18N` dictionaries and dropdown option translations in `setLanguage()`.
+   - Ensure all Voice Assistant code remains completely untouched.
+3. **Step 3 — Testing & Verification**:
+   - Run `python test_sih_features.py`.
+   - Test in browser (or via test runner) to confirm Voice Assistant, OCR, and Dashboard work smoothly without errors.
+4. **Step 4 — Git Commit & Final Walkthrough**:
+   - Commit changes with clear messages.
 
 ---
 
-## Verification Plan
-1. **Prescription Drug Interaction Check**: Test with sample prescriptions (e.g. Dolo + Crocin, Brufen + Voveran, Warfarin + Aspirin) to verify duplicate molecule warnings and pairwise interaction cards appear directly on the Report view.
-2. **Explainable Risk Reasoning**: Test different age, BMI, BP, glucose, and activity combinations to verify factor points, badges, and plain-language reasoning update dynamically.
-3. **Red-Flag Emergency Alert**: Test extreme values (BP 190/110, Glucose 45 mg/dL, SpO2 85%) and verify the high-visibility emergency banner appears with hotlines (108, 112).
-4. **Multilingual Switch**: Toggle Marathi, Hindi, and English to verify 100% of labels, dropdown options, and dynamic cards switch smoothly without breaking state.
+## 4. Rollback Plan
+If any step fails or an unexpected error occurs:
+- Immediate rollback can be executed using `git reset --hard 8bfa933` to restore the exact clean working state.

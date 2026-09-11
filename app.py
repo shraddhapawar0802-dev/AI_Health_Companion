@@ -1555,46 +1555,265 @@ def analyze_vitals(bp, sugar, hr, spo2, chol, creat, gender):
 
 
 def screen_disease_risk(age, gender, bmi_cat, bp_cat, glucose_cat, activity):
-    """Rule-based indicative disease risk score for SIH 2026."""
-    diab_pts = 0
-    if age >= 45: diab_pts += 20
-    elif age >= 30: diab_pts += 10
-    if bmi_cat == "overweight": diab_pts += 15
-    if bmi_cat == "obese": diab_pts += 30
-    if glucose_cat == "prediabetes": diab_pts += 30
-    if glucose_cat == "diabetes": diab_pts += 55
-    if activity == "sedentary": diab_pts += 10
-    if activity == "moderate": diab_pts += 5
-    diab_pct = min(95, diab_pts)
-
-    heart_pts = 0
-    if age >= 55: heart_pts += 25
-    elif age >= 40: heart_pts += 12
-    if bp_cat == "elevated": heart_pts += 15
-    if bp_cat == "high": heart_pts += 35
-    if bmi_cat == "overweight": heart_pts += 10
-    if bmi_cat == "obese": heart_pts += 20
-    if glucose_cat == "diabetes": heart_pts += 15
-    if glucose_cat == "prediabetes": heart_pts += 8
-    if activity == "sedentary": heart_pts += 12
-    heart_pct = min(95, heart_pts)
-
-    kidney_pts = 0
-    if bp_cat == "high": kidney_pts += 30
-    if bp_cat == "elevated": kidney_pts += 10
-    if glucose_cat == "diabetes": kidney_pts += 35
-    if glucose_cat == "prediabetes": kidney_pts += 10
-    if age >= 60: kidney_pts += 15
-    if bmi_cat == "obese": kidney_pts += 10
-    kidney_pct = min(95, kidney_pts)
+    """Rule-based indicative disease risk score for SIH 2026 — with Explainable AI (XAI) factor breakdown."""
 
     def level(pct):
         return "high" if pct >= 55 else "moderate" if pct >= 30 else "low"
 
+    def impact(pts):
+        return "high" if pts >= 20 else "moderate" if pts >= 10 else "low"
+
+    # ---- DIABETES RISK ----
+    diab_factors = []
+    diab_mitigating = []
+    diab_pts = 0
+
+    if age >= 45:
+        diab_pts += 20
+        diab_factors.append({"factor": "Age ≥ 45", "points": 20, "impact": "high",
+            "reason_en": "Age ≥ 45 significantly increases insulin resistance risk (ICMR).",
+            "reason_hi": "45+ उम्र में इंसुलिन प्रतिरोध का खतरा काफी बढ़ जाता है।",
+            "reason_mr": "वय ४५+ असल्यास इन्सुलिन प्रतिरोधाचा धोका मोठ्या प्रमाणात वाढतो."})
+    elif age >= 30:
+        diab_pts += 10
+        diab_factors.append({"factor": "Age 30–44", "points": 10, "impact": "moderate",
+            "reason_en": "Age 30–44 carries a moderate rise in diabetes risk.",
+            "reason_hi": "30–44 उम्र में मधुमेह का मध्यम खतरा बढ़ता है।",
+            "reason_mr": "वय ३०-४४ मध्ये मधुमेहाचा मध्यम धोका वाढतो."})
+    else:
+        diab_mitigating.append({"factor": "Young age (< 30)", "impact": "protective",
+            "reason_en": "Age < 30 is protective against type 2 diabetes.",
+            "reason_hi": "30 से कम उम्र में टाइप 2 मधुमेह का खतरा कम है।",
+            "reason_mr": "वय ३० पेक्षा कमी असल्यास टाइप 2 मधुमेहाचा धोका कमी असतो."})
+
+    if bmi_cat == "obese":
+        diab_pts += 30
+        diab_factors.append({"factor": "Obesity (BMI ≥ 30)", "points": 30, "impact": "high",
+            "reason_en": "Obesity is a primary modifiable risk factor for type 2 diabetes (WHO).",
+            "reason_hi": "मोटापा टाइप 2 मधुमेह का सबसे बड़ा परिवर्तनीय जोखिम कारक है।",
+            "reason_mr": "लठ्ठपणा हा टाइप 2 मधुमेहाचा सर्वात मोठा बदलता येणारा जोखीम घटक आहे."})
+    elif bmi_cat == "overweight":
+        diab_pts += 15
+        diab_factors.append({"factor": "Overweight (BMI 25–29.9)", "points": 15, "impact": "moderate",
+            "reason_en": "Overweight increases insulin resistance moderately.",
+            "reason_hi": "अधिक वजन इंसुलिन प्रतिरोध को मध्यम स्तर तक बढ़ाता है।",
+            "reason_mr": "जास्त वजनामुळे इन्सुलिन प्रतिरोध मध्यम प्रमाणात वाढतो."})
+    else:
+        diab_mitigating.append({"factor": "Normal BMI", "impact": "protective",
+            "reason_en": "Normal body weight lowers diabetes risk.",
+            "reason_hi": "सामान्य वजन मधुमेह का खतरा कम करता है।",
+            "reason_mr": "सामान्य वजन मधुमेहाचा धोका कमी करते."})
+
+    if glucose_cat == "diabetes":
+        diab_pts += 55
+        diab_factors.append({"factor": "Fasting Glucose ≥ 126 mg/dL", "points": 55, "impact": "high",
+            "reason_en": "High fasting glucose is the strongest direct indicator of diabetes (ICMR/WHO).",
+            "reason_hi": "उच्च उपवास ग्लूकोज मधुमेह का सबसे प्रत्यक्ष संकेतक है।",
+            "reason_mr": "उच्च उपवास शर्करा हा मधुमेहाचा सर्वात थेट सूचक आहे."})
+    elif glucose_cat == "prediabetes":
+        diab_pts += 30
+        diab_factors.append({"factor": "Prediabetes (Glucose 100–125)", "points": 30, "impact": "high",
+            "reason_en": "Prediabetes significantly raises risk of progressing to type 2 diabetes within 5 years.",
+            "reason_hi": "प्रिडायबिटीज 5 साल में टाइप 2 मधुमेह बनने का उच्च खतरा है।",
+            "reason_mr": "प्रिडायबिटीजमुळे ५ वर्षांत मधुमेह होण्याचा धोका जास्त असतो."})
+    else:
+        diab_mitigating.append({"factor": "Normal fasting glucose", "impact": "protective",
+            "reason_en": "Normal glucose levels are a strong protective factor.",
+            "reason_hi": "सामान्य ग्लूकोज स्तर एक मजबूत सुरक्षात्मक कारक है।",
+            "reason_mr": "सामान्य साखर पातळी हा एक महत्त्वाचा संरक्षणात्मक घटक आहे."})
+
+    if activity == "sedentary":
+        diab_pts += 10
+        diab_factors.append({"factor": "Sedentary Lifestyle", "points": 10, "impact": "moderate",
+            "reason_en": "Physical inactivity impairs glucose metabolism (ICMR).",
+            "reason_hi": "शारीरिक निष्क्रियता ग्लूकोज चयापचय को बाधित करती है।",
+            "reason_mr": "शारीरिक हालचाल नसल्यामुळे ग्लुकोज चयापचय बिघडते."})
+    elif activity == "moderate":
+        diab_pts += 5
+        diab_factors.append({"factor": "Moderate Activity", "points": 5, "impact": "low",
+            "reason_en": "Moderate activity provides partial metabolic benefit.",
+            "reason_hi": "मध्यम गतिविधि आंशिक चयापचय लाभ देती है।",
+            "reason_mr": "मध्यम हालचालीमुळे आंशिक चयापचय फायदा मिळतो."})
+    else:
+        diab_mitigating.append({"factor": "Active Lifestyle", "impact": "protective",
+            "reason_en": "Daily physical activity significantly reduces diabetes risk.",
+            "reason_hi": "दैनिक व्यायाम मधुमेह के खतरे को काफी कम करता है।",
+            "reason_mr": "दररोज व्यायाम केल्याने मधुमेहाचा धोका लक्षणीयरीत्या कमी होतो."})
+
+    diab_pct = min(95, diab_pts)
+    diab_modifiable = None
+    if bmi_cat in ("obese", "overweight"):
+        diab_modifiable = {"action_en": "Losing weight to a normal BMI can reduce diabetes risk by 20–30%.", "action_hi": "सामान्य BMI तक वजन घटाने से मधुमेह का खतरा 20–30% कम हो सकता है।", "action_mr": "वजन सामान्य BMI पर्यंत कमी केल्यास मधुमेहाचा धोका 20–30% कमी होऊ शकतो."}
+    elif activity == "sedentary":
+        diab_modifiable = {"action_en": "Adding 30 min daily walking can lower risk by ~10%.", "action_hi": "रोज 30 मिनट पैदल चलने से जोखिम ~10% कम हो सकता है।", "action_mr": "दररोज ३० मिनिट चालल्यास धोका ~१०% कमी होऊ शकतो."}
+
+    # ---- HEART CVD RISK ----
+    heart_factors = []
+    heart_mitigating = []
+    heart_pts = 0
+
+    if age >= 55:
+        heart_pts += 25
+        heart_factors.append({"factor": "Age ≥ 55", "points": 25, "impact": "high",
+            "reason_en": "Age ≥ 55 significantly raises cardiovascular disease risk (ESC/WHO).",
+            "reason_hi": "55+ उम्र में हृदय रोग का खतरा काफी बढ़ जाता है।",
+            "reason_mr": "वय ५५+ असल्यास हृदयविकाराचा धोका मोठ्या प्रमाणात वाढतो."})
+    elif age >= 40:
+        heart_pts += 12
+        heart_factors.append({"factor": "Age 40–54", "points": 12, "impact": "moderate",
+            "reason_en": "Age 40–54 starts raising cardiovascular risk.",
+            "reason_hi": "40–54 उम्र में हृदय रोग का खतरा बढ़ने लगता है।",
+            "reason_mr": "वय ४०-५४ मध्ये हृदयविकाराचा धोका वाढू लागतो."})
+    else:
+        heart_mitigating.append({"factor": "Young age (< 40)", "impact": "protective",
+            "reason_en": "Age < 40 is cardiovascular-protective.",
+            "reason_hi": "40 से कम उम्र में हृदय रोग का खतरा कम होता है।",
+            "reason_mr": "वय ४० पेक्षा कमी असल्यास हृदयविकाराचा धोका कमी आहे."})
+
+    if bp_cat == "high":
+        heart_pts += 35
+        heart_factors.append({"factor": "High Blood Pressure (≥ 140 mmHg)", "points": 35, "impact": "high",
+            "reason_en": "High BP (hypertension stage 2) is the leading modifiable risk for heart disease (ICMR).",
+            "reason_hi": "उच्च रक्तचाप हृदय रोग का सबसे बड़ा परिवर्तनीय कारण है।",
+            "reason_mr": "उच्च रक्तदाब हा हृदयविकाराचा सर्वात मोठा बदलता येणारा कारण आहे."})
+    elif bp_cat == "elevated":
+        heart_pts += 15
+        heart_factors.append({"factor": "Elevated Blood Pressure (130–139 mmHg)", "points": 15, "impact": "moderate",
+            "reason_en": "Elevated BP places moderate strain on heart arteries.",
+            "reason_hi": "बढ़ा हुआ रक्तचाप हृदय धमनियों पर मध्यम दबाव डालता है।",
+            "reason_mr": "वाढलेला रक्तदाब हृदयाच्या रक्तवाहिन्यांवर मध्यम ताण आणतो."})
+    else:
+        heart_mitigating.append({"factor": "Normal Blood Pressure", "impact": "protective",
+            "reason_en": "Normal BP protects the heart and arteries.",
+            "reason_hi": "सामान्य रक्तचाप हृदय और धमनियों को सुरक्षित रखता है।",
+            "reason_mr": "सामान्य रक्तदाब हृदय व रक्तवाहिन्यांचे रक्षण करतो."})
+
+    if bmi_cat == "obese":
+        heart_pts += 20
+        heart_factors.append({"factor": "Obesity (BMI ≥ 30)", "points": 20, "impact": "high",
+            "reason_en": "Obesity increases cardiac workload and promotes atherosclerosis.",
+            "reason_hi": "मोटापा दिल पर काम का बोझ बढ़ाता है और धमनियों को सख्त करता है।",
+            "reason_mr": "लठ्ठपणामुळे हृदयावर ताण वाढतो व रक्तवाहिन्या कठोर होतात."})
+    elif bmi_cat == "overweight":
+        heart_pts += 10
+        heart_factors.append({"factor": "Overweight (BMI 25–29.9)", "points": 10, "impact": "moderate",
+            "reason_en": "Overweight moderately increases cardiovascular risk.",
+            "reason_hi": "अधिक वजन हृदय रोग के जोखिम को मध्यम रूप से बढ़ाता है।",
+            "reason_mr": "जास्त वजनामुळे हृदयाचा धोका मध्यम प्रमाणात वाढतो."})
+
+    if glucose_cat == "diabetes":
+        heart_pts += 15
+        heart_factors.append({"factor": "Diabetes", "points": 15, "impact": "high",
+            "reason_en": "Diabetes doubles cardiovascular risk through vascular inflammation (ICMR/WHO).",
+            "reason_hi": "मधुमेह रक्त वाहिकाओं में सूजन से हृदय रोग का खतरा दोगुना करता है।",
+            "reason_mr": "मधुमेहामुळे रक्तवाहिन्यांमध्ये जळजळ होऊन हृदयविकाराचा धोका दुप्पट होतो."})
+    elif glucose_cat == "prediabetes":
+        heart_pts += 8
+        heart_factors.append({"factor": "Prediabetes", "points": 8, "impact": "moderate",
+            "reason_en": "Prediabetes causes vascular inflammation that stresses the heart.",
+            "reason_hi": "प्रिडायबिटीज रक्त वाहिकाओं में सूजन बढ़ाती है।",
+            "reason_mr": "प्रिडायबिटीजमुळे रक्तवाहिन्यांमध्ये जळजळ वाढते."})
+
+    if activity == "sedentary":
+        heart_pts += 12
+        heart_factors.append({"factor": "Sedentary Lifestyle", "points": 12, "impact": "moderate",
+            "reason_en": "Sedentary behavior is an independent risk factor for heart disease (ESC).",
+            "reason_hi": "बैठी जीवनशैली हृदय रोग का स्वतंत्र जोखिम कारक है।",
+            "reason_mr": "बैठी जीवनशैली हा हृदयविकाराचा स्वतंत्र जोखीम घटक आहे."})
+    else:
+        heart_mitigating.append({"factor": "Active Lifestyle", "impact": "protective",
+            "reason_en": "Regular physical activity significantly reduces CVD risk.",
+            "reason_hi": "नियमित व्यायाम हृदय रोग के खतरे को काफी कम करता है।",
+            "reason_mr": "नियमित व्यायामामुळे हृदयविकाराचा धोका लक्षणीयरीत्या कमी होतो."})
+
+    heart_pct = min(95, heart_pts)
+    heart_modifiable = None
+    if bp_cat == "high":
+        heart_modifiable = {"action_en": "Reducing BP below 130 mmHg can lower heart risk by ~30%.", "action_hi": "BP को 130 से नीचे लाने से हृदय जोखिम ~30% कम हो सकता है।", "action_mr": "BP १३० खाली आणल्यास हृदयाचा धोका ~३०% कमी होऊ शकतो."}
+    elif bmi_cat in ("obese", "overweight"):
+        heart_modifiable = {"action_en": "Weight reduction and salt reduction can significantly reduce heart risk.", "action_hi": "वजन और नमक कम करने से हृदय जोखिम काफी घट सकता है।", "action_mr": "वजन व मीठ कमी केल्यास हृदयाचा धोका लक्षणीयरीत्या कमी होतो."}
+
+    # ---- KIDNEY RISK ----
+    kidney_factors = []
+    kidney_mitigating = []
+    kidney_pts = 0
+
+    if bp_cat == "high":
+        kidney_pts += 30
+        kidney_factors.append({"factor": "High Blood Pressure (≥ 140 mmHg)", "points": 30, "impact": "high",
+            "reason_en": "High BP is the second leading cause of chronic kidney disease (ICMR).",
+            "reason_hi": "उच्च रक्तचाप पुरानी किडनी रोग का दूसरा प्रमुख कारण है।",
+            "reason_mr": "उच्च रक्तदाब हा जुन्या किडनी आजाराचे दुसरे प्रमुख कारण आहे."})
+    elif bp_cat == "elevated":
+        kidney_pts += 10
+        kidney_factors.append({"factor": "Elevated Blood Pressure", "points": 10, "impact": "moderate",
+            "reason_en": "Elevated BP strains kidney filtration units over time.",
+            "reason_hi": "बढ़ा हुआ रक्तचाप समय के साथ किडनी की छानने की क्षमता को कम करता है।",
+            "reason_mr": "वाढलेला रक्तदाब कालांतराने किडनीच्या गाळण्याच्या क्षमतेवर ताण आणतो."})
+    else:
+        kidney_mitigating.append({"factor": "Normal Blood Pressure", "impact": "protective",
+            "reason_en": "Normal BP preserves kidney filtration function.",
+            "reason_hi": "सामान्य रक्तचाप किडनी की छानने की क्षमता सुरक्षित रखता है।",
+            "reason_mr": "सामान्य रक्तदाब किडनीची गाळण्याची क्षमता टिकवून ठेवतो."})
+
+    if glucose_cat == "diabetes":
+        kidney_pts += 35
+        kidney_factors.append({"factor": "Diabetes", "points": 35, "impact": "high",
+            "reason_en": "Diabetes is the leading cause of kidney failure worldwide (ICMR/WHO).",
+            "reason_hi": "मधुमेह दुनिया भर में किडनी विफलता का सबसे बड़ा कारण है।",
+            "reason_mr": "मधुमेह हे जगभरात किडनी निकामी होण्याचे सर्वात मोठे कारण आहे."})
+    elif glucose_cat == "prediabetes":
+        kidney_pts += 10
+        kidney_factors.append({"factor": "Prediabetes", "points": 10, "impact": "moderate",
+            "reason_en": "Prediabetes begins to impair kidney microvessels.",
+            "reason_hi": "प्रिडायबिटीज किडनी की छोटी रक्त वाहिकाओं को नुकसान पहुंचाना शुरू करती है।",
+            "reason_mr": "प्रिडायबिटीजमुळे किडनीच्या सूक्ष्म रक्तवाहिन्यांना नुकसान होऊ लागते."})
+    else:
+        kidney_mitigating.append({"factor": "Normal glucose", "impact": "protective",
+            "reason_en": "Normal blood sugar protects kidney microvasculature.",
+            "reason_hi": "सामान्य ग्लूकोज किडनी की सूक्ष्म वाहिकाओं की रक्षा करता है।",
+            "reason_mr": "सामान्य साखर किडनीच्या सूक्ष्म रक्तवाहिन्यांचे रक्षण करते."})
+
+    if age >= 60:
+        kidney_pts += 15
+        kidney_factors.append({"factor": "Age ≥ 60", "points": 15, "impact": "moderate",
+            "reason_en": "Kidney filtration rate (eGFR) naturally declines after age 60.",
+            "reason_hi": "60 के बाद किडनी की छानने की दर (eGFR) स्वाभाविक रूप से कम हो जाती है।",
+            "reason_mr": "वय ६० नंतर किडनीची गाळण्याची दर (eGFR) नैसर्गिकरित्या कमी होते."})
+
+    if bmi_cat == "obese":
+        kidney_pts += 10
+        kidney_factors.append({"factor": "Obesity (BMI ≥ 30)", "points": 10, "impact": "moderate",
+            "reason_en": "Obesity increases glomerular hyperfiltration, straining kidneys.",
+            "reason_hi": "मोटापा किडनी पर अतिरिक्त छानने का दबाव डालता है।",
+            "reason_mr": "लठ्ठपणामुळे किडनीवर अतिरिक्त गाळण्याचा दबाव येतो."})
+
+    kidney_pct = min(95, kidney_pts)
+    kidney_modifiable = None
+    if glucose_cat == "diabetes":
+        kidney_modifiable = {"action_en": "Tight blood sugar control (HbA1c < 7%) can slow kidney damage significantly.", "action_hi": "कड़ा ग्लूकोज नियंत्रण (HbA1c < 7%) किडनी के नुकसान को काफी धीमा कर सकता है।", "action_mr": "साखर नियंत्रण (HbA1c < ७%) किडनीच्या नुकसानास लक्षणीयरीत्या मंद करू शकते."}
+    elif bp_cat == "high":
+        kidney_modifiable = {"action_en": "BP control below 130/80 mmHg is the most effective kidney protector.", "action_hi": "BP को 130/80 से नीचे रखना किडनी की सबसे प्रभावी सुरक्षा है।", "action_mr": "BP १३०/८० खाली ठेवणे हे किडनीचे सर्वात प्रभावी संरक्षण आहे."}
+
     return {
-        "diabetes": {"pct": diab_pct, "level": level(diab_pct)},
-        "heart": {"pct": heart_pct, "level": level(heart_pct)},
-        "kidney": {"pct": kidney_pct, "level": level(kidney_pct)},
+        "diabetes": {
+            "pct": diab_pct, "level": level(diab_pct),
+            "contributing_factors": diab_factors,
+            "mitigating_factors": diab_mitigating,
+            "modifiable_target": diab_modifiable
+        },
+        "heart": {
+            "pct": heart_pct, "level": level(heart_pct),
+            "contributing_factors": heart_factors,
+            "mitigating_factors": heart_mitigating,
+            "modifiable_target": heart_modifiable
+        },
+        "kidney": {
+            "pct": kidney_pct, "level": level(kidney_pct),
+            "contributing_factors": kidney_factors,
+            "mitigating_factors": kidney_mitigating,
+            "modifiable_target": kidney_modifiable
+        },
         "disclaimer": "This percentage is a rule-based indicative score, not a calibrated clinical probability from a trained model.",
     }
 

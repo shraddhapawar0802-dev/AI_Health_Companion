@@ -666,23 +666,63 @@
       display: none;
       gap: 16px;
       align-items: flex-start;
-      background: var(--coral-soft);
-      border: 2px solid var(--coral);
+      background: linear-gradient(135deg, #fff0f0 0%, #ffe4e4 100%);
+      border: 3px solid #dc2626;
+      border-left: 8px solid #dc2626;
       border-radius: var(--radius-md);
-      padding: 16px 20px;
+      padding: 20px 22px;
       margin-bottom: 20px;
-      animation: pulse-danger 1.6s infinite alternate;
-      box-shadow: var(--shadow-xs);
+      animation: pulse-danger 1.2s infinite alternate;
+      box-shadow: 0 4px 24px rgba(220,38,38,0.22), 0 0 0 2px rgba(220,38,38,0.12);
     }
     .emergency-banner.active { display: flex; }
     @keyframes pulse-danger {
-      0% { box-shadow: 0 0 0 rgba(220, 38, 38, 0.15); }
-      100% { box-shadow: 0 0 16px rgba(220, 38, 38, 0.35); }
+      0% { box-shadow: 0 4px 24px rgba(220, 38, 38, 0.18), 0 0 0 2px rgba(220,38,38,0.09); }
+      100% { box-shadow: 0 4px 36px rgba(220, 38, 38, 0.42), 0 0 0 4px rgba(220,38,38,0.2); }
     }
-    .emergency-icon { font-size: 26px; color: var(--coral); line-height: 1; flex-shrink: 0; }
-    .emergency-banner h2 { margin: 0 0 4px; font-family: var(--font-display); color: var(--coral); font-size: 1.15rem; font-weight: 700; line-height: 1.35; }
-    .emergency-banner p { margin: 0 0 6px; color: #7f1d1d; font-size: 0.88rem; line-height: 1.5; }
-    .emergency-banner ul { margin: 0; padding-left: 18px; font-size: 0.85rem; color: #991b1b; line-height: 1.5; }
+    .emergency-icon { font-size: 32px; color: #dc2626; line-height: 1; flex-shrink: 0; animation: shake-icon 0.8s infinite; }
+    @keyframes shake-icon {
+      0%,100%{transform:rotate(-6deg);} 50%{transform:rotate(6deg);}
+    }
+    .emergency-banner h2 { margin: 0 0 6px; font-family: var(--font-display); color: #b91c1c; font-size: 1.2rem; font-weight: 800; line-height: 1.35; letter-spacing:-0.01em; }
+    .emergency-banner p { margin: 0 0 8px; color: #7f1d1d; font-size: 0.88rem; line-height: 1.5; }
+    .emergency-banner ul { margin: 0 0 14px; padding-left: 18px; font-size: 0.86rem; color: #991b1b; line-height: 1.6; font-weight:600; }
+    .emergency-call-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    .emergency-call-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; text-decoration: none; cursor: pointer; border: none; transition: transform 0.15s, box-shadow 0.15s; }
+    .emergency-call-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.18); }
+    .ecb-108 { background: #dc2626; color: white; }
+    .ecb-112 { background: #b91c1c; color: white; }
+    .ecb-hosp { background: #fff; color: #991b1b; border: 2px solid #dc2626; }
+
+    /* MedTrace Rx Safety section */
+    .medtrace-section { background: linear-gradient(135deg,#f0fdf4 0%,#ecfdf5 100%); border: 1.5px solid #22c55e; border-radius: var(--radius-md); padding: 16px 18px; margin-top: 16px; }
+    .medtrace-section.danger { background: linear-gradient(135deg,#fff0f0 0%,#ffe4e4 100%); border-color: #ef4444; }
+    .medtrace-section.caution { background: linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%); border-color: #f59e0b; }
+    .medtrace-header { display:flex; align-items:center; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
+    .medtrace-title { font-weight:700; font-size:0.97rem; color:var(--deep); display:flex; align-items:center; gap:6px; }
+    .medtrace-badge { font-size:0.72rem; font-weight:700; padding:3px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:.04em; }
+    .medtrace-badge-safe { background:#dcfce7; color:#166534; }
+    .medtrace-badge-caution { background:#fef3c7; color:#92400e; }
+    .medtrace-badge-danger { background:#fee2e2; color:#991b1b; }
+    .medtrace-open-btn { margin-left:auto; font-size:0.8rem; padding:5px 12px; border-radius:8px; background:var(--primary); color:white; border:none; cursor:pointer; font-weight:600; display:flex; align-items:center; gap:5px; transition: opacity .15s; }
+    .medtrace-open-btn:hover { opacity:0.88; }
+    .medtrace-warning-card { background:#fff; border:1.5px solid #fca5a5; border-radius:8px; padding:10px 14px; margin-bottom:8px; }
+    .medtrace-warning-card.mod { border-color:#fcd34d; }
+    .medtrace-warning-head { display:flex; align-items:center; gap:8px; font-weight:700; font-size:0.86rem; color:#7f1d1d; }
+    .medtrace-warning-head.mod { color:#92400e; }
+    .medtrace-warning-body { font-size:0.82rem; color:#374151; margin-top:4px; line-height:1.5; }
+    .medtrace-ok { display:flex; align-items:center; gap:8px; font-size:0.86rem; color:#166534; font-weight:600; padding:6px 0; }
+    /* Explainable Risk Reasoning (XAI) */
+    .xai-section { margin-top:12px; }
+    .xai-factor-row { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+    .xai-chip { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:20px; font-size:0.76rem; font-weight:600; border:1.5px solid transparent; }
+    .xai-chip.high { background:#fee2e2; color:#991b1b; border-color:#fca5a5; }
+    .xai-chip.moderate { background:#fff7ed; color:#9a3412; border-color:#fdba74; }
+    .xai-chip.low { background:#fefce8; color:#713f12; border-color:#fde68a; }
+    .xai-chip.protective { background:#dcfce7; color:#166534; border-color:#86efac; }
+    .xai-reason { font-size:0.82rem; color:#475569; margin-top:8px; line-height:1.5; background:rgba(255,255,255,0.65); border-radius:6px; padding:8px 10px; border-left:3px solid var(--primary); }
+    .xai-target { font-size:0.82rem; color:#1e3a5f; background:#eff6ff; border:1px solid #bfdbfe; border-radius:6px; padding:7px 10px; margin-top:8px; display:flex; align-items:flex-start; gap:6px; }
+    .xai-target i { color:#3b82f6; margin-top:2px; flex-shrink:0; }
 
     .combined-risk-banner {
       display: none;
@@ -1548,10 +1588,15 @@
 
       <div id="emergency-banner" class="emergency-banner">
         <div class="emergency-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-        <div>
-          <h2 id="rf-title">🚨 तातडीचा धोका इशारा (Emergency Red-Flag)</h2>
-          <p id="rf-desc">तुमच्या रिपोर्टमधील काही आकडे सामान्य मर्यादेपेक्षा खूप जास्त आहेत. कृपया कोणताही घरगुती उपाय न करता लगेच जवळच्या डॉक्टरांशी किंवा रुग्णालयाशी संपर्क साधा.</p>
+        <div style="flex:1; min-width:0;">
+          <h2 id="rf-title">🚨 तातडीचा धोका इशारा (Emergency Red-Flag Alert)</h2>
+          <p id="rf-desc">तुमच्या रिपोर्टमधील काही आकडे अत्यंत धोकादायक मर्यादेत आहेत. कृपया कोणताही घरगुती उपाय न करता <strong>तातडीने</strong> डॉक्टर किंवा रुग्णालयाशी संपर्क साधा.</p>
           <ul id="rf-list"></ul>
+          <div class="emergency-call-btns">
+            <a href="tel:108" class="emergency-call-btn ecb-108"><i class="fa-solid fa-phone"></i> <span id="rf-btn-108">📞 108 रुग्णवाहिका (Ambulance)</span></a>
+            <a href="tel:112" class="emergency-call-btn ecb-112"><i class="fa-solid fa-phone"></i> <span id="rf-btn-112">📞 112 आपत्कालीन (Emergency)</span></a>
+            <a href="https://www.google.com/maps/search/emergency+hospital+near+me" target="_blank" rel="noopener" class="emergency-call-btn ecb-hosp"><i class="fa-solid fa-hospital"></i> <span id="rf-btn-hosp">🏥 जवळचे रुग्णालय</span></a>
+          </div>
         </div>
       </div>
 
@@ -1844,18 +1889,27 @@
           <div id="risk-results">
             <div class="risk-score-box">
               <div class="risk-circle circle-low" id="risk-badge-diab">15%</div>
-              <div><h4 style="font-weight:700;" id="risk-title-diab">मधुमेह जोखीम (Diabetes Risk): कमी</h4>
-                <p style="font-size:0.85rem; color:var(--slate); margin-top:3px;" id="risk-desc-diab">वय आणि साखर पातळी सामान्य असल्याने मधुमेहाचा धोका कमी व सुरक्षित आहे.</p></div>
+              <div style="flex:1;min-width:0;">
+                <h4 style="font-weight:700;" id="risk-title-diab">मधुमेह जोखीम (Diabetes Risk): कमी</h4>
+                <p style="font-size:0.85rem; color:var(--slate); margin-top:3px;" id="risk-desc-diab">वय आणि साखर पातळी सामान्य असल्याने मधुमेहाचा धोका कमी व सुरक्षित आहे.</p>
+                <div class="xai-section" id="xai-diab"></div>
+              </div>
             </div>
             <div class="risk-score-box">
               <div class="risk-circle circle-med" id="risk-badge-heart">55%</div>
-              <div><h4 style="font-weight:700;" id="risk-title-heart">हृदयविकार जोखीम (Heart CVD Risk): मध्यम</h4>
-                <p style="font-size:0.85rem; color:var(--slate); margin-top:3px;" id="risk-desc-heart">रक्तदाब खूप जास्त (140+) असल्याने हृदयाच्या रक्तवाहिन्यांवर ताण येत आहे. आहारातील मीठ कमी करा.</p></div>
+              <div style="flex:1;min-width:0;">
+                <h4 style="font-weight:700;" id="risk-title-heart">हृदयविकार जोखीम (Heart CVD Risk): मध्यम</h4>
+                <p style="font-size:0.85rem; color:var(--slate); margin-top:3px;" id="risk-desc-heart">रक्तदाब खूप जास्त (140+) असल्याने हृदयाच्या रक्तवाहिन्यांवर ताण येत आहे. आहारातील मीठ कमी करा.</p>
+                <div class="xai-section" id="xai-heart"></div>
+              </div>
             </div>
             <div class="risk-score-box">
               <div class="risk-circle circle-low" id="risk-badge-kidney">25%</div>
-              <div><h4 style="font-weight:700;" id="risk-title-kidney">किडनी जोखीम (Kidney Health): सुरक्षित</h4>
-                <p style="font-size:0.85rem; color:var(--slate); margin-top:3px;" id="risk-desc-kidney">सध्या कोणताही धोका नाही. उच्च रक्तदाब नियंत्रणात ठेवा आणि भरपूर पाणी प्या.</p></div>
+              <div style="flex:1;min-width:0;">
+                <h4 style="font-weight:700;" id="risk-title-kidney">किडनी जोखीम (Kidney Health): सुरक्षित</h4>
+                <p style="font-size:0.85rem; color:var(--slate); margin-top:3px;" id="risk-desc-kidney">सध्या कोणताही धोका नाही. उच्च रक्तदाब नियंत्रणात ठेवा आणि भरपूर पाणी प्या.</p>
+                <div class="xai-section" id="xai-kidney"></div>
+              </div>
             </div>
           </div>
           <p style="margin-top:14px; font-size:0.76rem; color:var(--slate); font-style:italic; border-top:1px solid var(--line); padding-top:10px;">
@@ -2034,7 +2088,8 @@
         cardResultTitle: "सोप्या भाषेतील अहवाल (Explanation)", btnSpeak: "ऐका (Voice)", btnDownload: "PDF डाऊनलोड करा",
         btnDocSummary: "एक-पानी डॉक्टर समरी (Print)",
         noReport: "डावीकडे रिपोर्ट अपलोड करा किंवा वरीलपैकी एक 'त्वरित डेमो' निवडून विश्लेषणाचा अनुभव घ्या.",
-        rfTitle: "🚨 तातडीचा धोका इशारा (Emergency Red-Flag)", rfDesc: "तुमच्या रिपोर्टमधील काही आकडे सामान्य मर्यादेपेक्षा खूप जास्त आहेत. कृपया कोणताही घरगुती उपाय न करता लगेच जवळच्या डॉक्टरांशी किंवा रुग्णालयाशी संपर्क साधा.",
+        rfTitle: "🚨 तातडीचा धोका इशारा (Emergency Red-Flag Alert)", rfDesc: "तुमच्या रिपोर्टमधील काही आकडे अत्यंत धोकादायक मर्यादेत आहेत. कृपया कोणताही घरगुती उपाय न करता तातडीने डॉक्टर किंवा रुग्णालयाशी संपर्क साधा.",
+        rfBtn108: "📞 108 रुग्णवाहिका (Ambulance)", rfBtn112: "📞 112 आपत्कालीन (Emergency)", rfBtnHosp: "🏥 जवळचे रुग्णालय शोधा",
         combRiskTitle: "एकत्रित जोखीम इशारा (High BP + High Sugar)", combRiskDesc: "तुमचा रक्तदाब आणि रक्तातील साखर दोन्ही एकाच वेळी जास्त आहेत. यामुळे हृदय आणि रक्तवाहिन्यांवर दुहेरी ताण येतो. लवकरात लवकर डॉक्टरांना भेटा.",
         overallEyebrow: "एकूण आरोग्य स्थिती",
         verdictNormal: "सर्व आकडे सामान्य व सुरक्षित आहेत", verdictWatch: "काही घटकांवर लक्ष ठेवणे आवश्यक", verdictAbnormal: "काही घटकांमध्ये अनियमितता — डॉक्टरांचा सल्ला घ्या", verdictRed: "🚨 गंभीर धोका — तातडीने वैद्यकीय मदत घ्या",
@@ -2107,7 +2162,8 @@
         cardResultTitle: "सरल भाषा में रिपोर्ट (Explanation)", btnSpeak: "सुनें (Voice)", btnDownload: "PDF डाउनलोड करें",
         btnDocSummary: "एक-पेज डॉक्टर सारांश (Print)",
         noReport: "बाईं ओर रिपोर्ट अपलोड करें या कोई भी 'त्वरित डेमो' चुनकर विश्लेषण देखें।",
-        rfTitle: "🚨 आपातकालीन चेतावनी (Emergency Red-Flag)", rfDesc: "आपकी रिपोर्ट में कुछ संख्याएं खतरे के स्तर पर हैं। कृपया बिना देर किए तुरंत डॉक्टर या अस्पताल से संपर्क करें।",
+        rfTitle: "🚨 आपातकालीन चेतावनी (Emergency Red-Flag Alert)", rfDesc: "आपकी रिपोर्ट में कुछ संख्याएं खतरे के स्तर पर हैं। कृपया बिना देर किए तुरंत डॉक्टर या अस्पताल से संपर्क करें।",
+        rfBtn108: "📞 108 एम्बुलेंस (Ambulance)", rfBtn112: "📞 112 आपातकाल (Emergency)", rfBtnHosp: "🏥 पास का अस्पताल खोजें",
         combRiskTitle: "संयुक्त जोखिम चेतावनी (High BP + High Sugar)", combRiskDesc: "आपका ब्लड प्रेशर और ब्लड शुगर दोनों एक साथ ज्यादा हैं। इससे हृदय और रक्तवाहिकाओं पर दोहरा दबाव पड़ता है। जल्द से जल्द डॉक्टर से मिलें।",
         overallEyebrow: "समग्र स्वास्थ्य स्थिति",
         verdictNormal: "सभी मान सामान्य और सुरक्षित हैं", verdictWatch: "कुछ मान ध्यान देने योग्य हैं", verdictAbnormal: "कुछ मान असामान्य हैं — डॉक्टर से सलाह लें", verdictRed: "🚨 आपातकालीन खतरा — तुरंत चिकित्सा सहायता लें",
@@ -2181,6 +2237,7 @@
         btnDocSummary: "Print One-Page Doctor Summary",
         noReport: "Upload a document on the left or select a 'Quick Demo' preset to view the simplified report.",
         rfTitle: "🚨 Emergency Red-Flag Alert", rfDesc: "One or more markers are critically abnormal. Please seek immediate professional medical consultation.",
+        rfBtn108: "📞 108 Ambulance", rfBtn112: "📞 112 Emergency", rfBtnHosp: "🏥 Find Nearest Hospital",
         combRiskTitle: "Combined Risk Alert (High BP + High Sugar)", combRiskDesc: "Both blood pressure and blood sugar are elevated together, which places double strain on the heart and blood vessels. Please consult a doctor soon.",
         overallEyebrow: "Overall Health Status",
         verdictNormal: "All values are normal and safe", verdictWatch: "Some values need watching", verdictAbnormal: "Some values are abnormal — consult a doctor", verdictRed: "🚨 Emergency risk — seek immediate medical help",
@@ -2283,6 +2340,9 @@
       setText('btn-download-txt', t.btnDownload);
       setText('rf-title', t.rfTitle);
       setText('rf-desc', t.rfDesc);
+      setText('rf-btn-108', t.rfBtn108);
+      setText('rf-btn-112', t.rfBtn112);
+      setText('rf-btn-hosp', t.rfBtnHosp);
       setText('comb-risk-title', t.combRiskTitle);
       setText('comb-risk-desc', t.combRiskDesc);
       setText('txt-overall-eyebrow', t.overallEyebrow);
@@ -2890,6 +2950,67 @@
           prescWrap.appendChild(card);
         });
         container.appendChild(prescWrap);
+
+        // --- MedTrace Rx Safety & Drug Interaction Analysis ---
+        if (medicineSafety) {
+          const overall = medicineSafety.overall_safety || 'consult_doctor';
+          const evals = medicineSafety.evaluations || [];
+          const warnings = medicineSafety.pairwise_warnings || [];
+
+          const mtWrap = document.createElement('div');
+          const mtClass = overall === 'consult_doctor' ? 'danger' : overall === 'caution' ? 'caution' : '';
+          mtWrap.className = 'medtrace-section ' + mtClass;
+
+          const mtTitle = L('💊 MedTrace Rx सुरक्षा तपासणी', '💊 MedTrace Rx सुरक्षा जांच', '💊 MedTrace Rx Safety & Drug Interaction Check');
+          const mtBadgeLabel = overall === 'consult_doctor'
+            ? L('🚨 उच्च धोका', '🚨 उच्च जोखिम', '🚨 HIGH RISK')
+            : overall === 'caution'
+            ? L('⚠️ सावधगिरी', '⚠️ सावधानी', '⚠️ CAUTION')
+            : L('✅ सुरक्षित', '✅ सुरक्षित', '✅ SAFE');
+          const mtBadgeClass = overall === 'consult_doctor' ? 'medtrace-badge-danger' : overall === 'caution' ? 'medtrace-badge-caution' : 'medtrace-badge-safe';
+
+          let mtHtml = `<div class="medtrace-header">
+            <div class="medtrace-title"><i class="fa-solid fa-shield-virus"></i> ${mtTitle}</div>
+            <span class="medtrace-badge ${mtBadgeClass}">${mtBadgeLabel}</span>
+            <button class="medtrace-open-btn" onclick="switchTab('tab-meds',null); setTimeout(()=>{ const ta=document.getElementById('meds-raw-text'); if(ta&&!ta.value.trim()){ const names=[...document.querySelectorAll('.presc-name')].map(n=>n.childNodes[0].nodeValue.trim()).join('\\n'); ta.value=names; checkMedicinesAndInteractions(); } },200);">
+              <i class="fa-solid fa-arrow-right"></i> ${L('MedTrace Lab मध्ये उघडा', 'MedTrace Lab में खोलें', 'Open in MedTrace Lab')}
+            </button>
+          </div>`;
+
+          if (warnings && warnings.length > 0) {
+            warnings.forEach(w => {
+              const sev = w.severity === 'high' ? 'high' : 'moderate';
+              const wClass = sev === 'high' ? '' : ' mod';
+              const wHeadClass = sev === 'high' ? '' : ' mod';
+              const wIcon = sev === 'high' ? '🚨' : '⚠️';
+              const wDesc = L(w.warning_mr || w.warning_en, w.warning_hi || w.warning_en, w.warning_en);
+              const wRec = L(w.recommendation_mr || w.recommendation_en || '', w.recommendation_hi || w.recommendation_en || '', w.recommendation_en || '');
+              mtHtml += `<div class="medtrace-warning-card${wClass}">
+                <div class="medtrace-warning-head${wHeadClass}">${wIcon} ${wDesc}</div>
+                ${wRec ? `<div class="medtrace-warning-body">${wRec}</div>` : ''}
+              </div>`;
+            });
+          } else if (overall === 'safe') {
+            mtHtml += `<div class="medtrace-ok"><i class="fa-solid fa-circle-check"></i> ${L('कोणताही धोकादायक परस्परविरोध आढळला नाही.', 'कोई खतरनाक परस्पर विरोध नहीं मिला।', 'No dangerous drug interaction found in curated clinical database.')}</div>`;
+          }
+
+          mtWrap.innerHTML = mtHtml;
+          container.appendChild(mtWrap);
+
+          // Also trigger emergency banner for high-risk drug interactions
+          if (overall === 'consult_doctor' && warnings.some(w => w.severity === 'high')) {
+            const emergencyBanner = document.getElementById('emergency-banner');
+            const rfList = document.getElementById('rf-list');
+            if (emergencyBanner) {
+              emergencyBanner.classList.add('active');
+              if (rfList) {
+                const li = document.createElement('li');
+                li.innerText = L('उच्च-जोखीम औषध परस्परविरोध आढळला — डॉक्टरांशी त्वरित संपर्क साधा.', 'उच्च-जोखिम दवा परस्पर विरोध मिला — तुरंत डॉक्टर से मिलें।', 'High-risk drug interaction detected — contact your doctor immediately.');
+                rfList.appendChild(li);
+              }
+            }
+          }
+        }
       }
 
       // 5. Update Overall Verdict Card & Meter Bar
@@ -3165,6 +3286,82 @@
         ? L('मध्यम धोका — रक्तदाब नियंत्रणात ठेवा आणि भरपूर पाणी प्या.', 'मध्यम जोखिम — रक्तचाप नियंत्रण में रखें और पानी अधिक पिएं।', 'Moderate risk — keep BP controlled and stay hydrated.')
         : L('सध्या कोणताही धोका नाही. उच्च रक्तदाब नियंत्रणात ठेवा आणि भरपूर पाणी प्या.', 'फिलहाल कोई खतरा नहीं। रक्तचाप नियंत्रण में रखें और पानी अधिक पिएं।', 'No current risk. Keep blood pressure controlled and stay hydrated.');
 
+      // Explainable Risk Reasoning — client-side XAI breakdown
+      function renderXAI(containerId, factors, mitigating, modifiable, lang) {
+        const xaiEl = document.getElementById(containerId);
+        if (!xaiEl) return;
+        const impactIcon = { high: '🔴', moderate: '🟠', low: '🟡', protective: '🟢' };
+        const impactLabel = {
+          mr: { high: 'उच्च प्रभाव', moderate: 'मध्यम प्रभाव', low: 'कमी प्रभाव', protective: 'संरक्षणात्मक' },
+          hi: { high: 'उच्च प्रभाव', moderate: 'मध्यम प्रभाव', low: 'कम प्रभाव', protective: 'सुरक्षात्मक' },
+          en: { high: 'High Impact', moderate: 'Moderate Impact', low: 'Low Impact', protective: 'Protective' }
+        };
+        const lbl = impactLabel[lang] || impactLabel['en'];
+        const reasonKey = lang === 'mr' ? 'reason_mr' : lang === 'hi' ? 'reason_hi' : 'reason_en';
+        const actionKey = lang === 'mr' ? 'action_mr' : lang === 'hi' ? 'action_hi' : 'action_en';
+
+        let html = '';
+        if (factors && factors.length > 0) {
+          const headerText = lang === 'mr' ? '📊 जोखीम वाढवणारे घटक:' : lang === 'hi' ? '📊 जोखिम बढ़ाने वाले कारक:' : '📊 Contributing Risk Factors:';
+          html += `<div style="font-size:0.78rem;font-weight:700;color:var(--deep);margin-top:8px;">${headerText}</div><div class="xai-factor-row">`;
+          factors.forEach(f => {
+            const imp = f.impact || 'moderate';
+            html += `<span class="xai-chip ${imp}">${impactIcon[imp]} ${f.factor} <span style="opacity:0.7;">+${f.points}pts</span></span>`;
+          });
+          html += '</div>';
+          // Show reason for highest-impact factor
+          const topFactor = factors.reduce((a, b) => (b.points > a.points ? b : a), factors[0]);
+          if (topFactor && topFactor[reasonKey]) {
+            html += `<div class="xai-reason"><i class="fa-solid fa-circle-info" style="color:var(--primary)"></i> ${topFactor[reasonKey]}</div>`;
+          }
+        }
+        if (mitigating && mitigating.length > 0) {
+          const mHeader = lang === 'mr' ? '🛡️ संरक्षणात्मक घटक:' : lang === 'hi' ? '🛡️ सुरक्षात्मक कारक:' : '🛡️ Protective Factors:';
+          html += `<div style="font-size:0.78rem;font-weight:700;color:var(--deep);margin-top:8px;">${mHeader}</div><div class="xai-factor-row">`;
+          mitigating.forEach(f => { html += `<span class="xai-chip protective">🟢 ${f.factor}</span>`; });
+          html += '</div>';
+        }
+        if (modifiable && modifiable[actionKey]) {
+          const actionHeader = lang === 'mr' ? '🎯 सुधारणायोग्य लक्ष्य:' : lang === 'hi' ? '🎯 सुधार योग्य लक्ष्य:' : '🎯 Key Modifiable Target:';
+          html += `<div class="xai-target"><i class="fa-solid fa-bullseye"></i><div><strong>${actionHeader}</strong> ${modifiable[actionKey]}</div></div>`;
+        }
+        xaiEl.innerHTML = html;
+      }
+
+      // Build local XAI factors from current form state (offline mode)
+      const localXAI = {
+        diabetes: { contributing_factors: [], mitigating_factors: [], modifiable_target: null },
+        heart:    { contributing_factors: [], mitigating_factors: [], modifiable_target: null },
+        kidney:   { contributing_factors: [], mitigating_factors: [], modifiable_target: null }
+      };
+      // Populate diab local XAI
+      if (age >= 45) localXAI.diabetes.contributing_factors.push({factor: age>=45?'Age ≥ 45':'Age 30-44', points: age>=45?20:10, impact:'high', reason_en:'Age is a major diabetes risk factor.', reason_hi:'उम्र मधुमेह का प्रमुख कारण है।', reason_mr:'वय हा मधुमेहाचा प्रमुख घटक आहे.'});
+      else if (age >= 30) localXAI.diabetes.contributing_factors.push({factor:'Age 30–44', points:10, impact:'moderate', reason_en:'Age 30-44 moderately raises diabetes risk.', reason_hi:'30-44 उम्र में खतरा बढ़ता है।', reason_mr:'वय ३०-४४ मध्ये धोका वाढतो.'});
+      if (bmi === 'obese') localXAI.diabetes.contributing_factors.push({factor:'Obesity', points:30, impact:'high', reason_en:'Obesity is the top modifiable diabetes risk (WHO).', reason_hi:'मोटापा सबसे बड़ा जोखिम है।', reason_mr:'लठ्ठपणा सर्वात मोठा जोखीम आहे.'});
+      else if (bmi === 'overweight') localXAI.diabetes.contributing_factors.push({factor:'Overweight', points:15, impact:'moderate', reason_en:'Overweight increases insulin resistance.', reason_hi:'अधिक वजन से इंसुलिन प्रतिरोध बढ़ता है।', reason_mr:'जास्त वजनामुळे इन्सुलिन प्रतिरोध वाढतो.'});
+      else localXAI.diabetes.mitigating_factors.push({factor:'Normal BMI', impact:'protective'});
+      if (glucoseCat === 'diabetes') localXAI.diabetes.contributing_factors.push({factor:'High Fasting Glucose', points:55, impact:'high', reason_en:'High glucose directly indicates diabetes.', reason_hi:'उच्च ग्लूकोज सीधे मधुमेह दर्शाता है।', reason_mr:'उच्च साखर थेट मधुमेह दर्शवते.'});
+      else if (glucoseCat === 'prediabetes') localXAI.diabetes.contributing_factors.push({factor:'Prediabetes', points:30, impact:'high', reason_en:'Prediabetes = high progression risk.', reason_hi:'प्रिडायबिटीज = मधुमेह का उच्च खतरा।', reason_mr:'प्रिडायबिटीज = मधुमेहाचा जास्त धोका.'});
+      else localXAI.diabetes.mitigating_factors.push({factor:'Normal Glucose', impact:'protective'});
+      if (activity === 'sedentary') localXAI.diabetes.contributing_factors.push({factor:'Sedentary Lifestyle', points:10, impact:'moderate', reason_en:'Inactivity impairs glucose metabolism.', reason_hi:'निष्क्रियता ग्लूकोज चयापचय को बाधित करती है।', reason_mr:'निष्क्रियतेमुळे ग्लुकोज चयापचय बिघडते.'});
+      else localXAI.diabetes.mitigating_factors.push({factor:'Active Lifestyle', impact:'protective'});
+      if (bmi === 'obese' || bmi === 'overweight') localXAI.diabetes.modifiable_target = {action_en:'Losing weight can reduce diabetes risk by 20–30%.', action_hi:'वजन घटाने से खतरा 20-30% कम।', action_mr:'वजन कमी केल्यास धोका 20-30% कमी.'};
+
+      // Populate heart local XAI
+      if (bpCat === 'high') localXAI.heart.contributing_factors.push({factor:'High BP ≥ 140', points:35, impact:'high', reason_en:'High BP is the top modifiable heart risk.', reason_hi:'उच्च BP हृदय का सबसे बड़ा जोखिम है।', reason_mr:'उच्च BP हृदयाचा सर्वात मोठा जोखीम आहे.'});
+      else if (bpCat === 'elevated') localXAI.heart.contributing_factors.push({factor:'Elevated BP', points:15, impact:'moderate', reason_en:'Elevated BP strains heart arteries.', reason_hi:'बढ़ा BP हृदय धमनियों पर दबाव डालता है।', reason_mr:'वाढलेला BP हृदयाच्या रक्तवाहिन्यांवर ताण आणतो.'});
+      else localXAI.heart.mitigating_factors.push({factor:'Normal BP', impact:'protective'});
+      if (bpCat === 'high') localXAI.heart.modifiable_target = {action_en:'Reducing BP < 130 mmHg lowers heart risk ~30%.', action_hi:'BP 130 से कम करने से जोखिम ~30% कम।', action_mr:'BP १३० खाली आणल्यास धोका ~३०% कमी.'};
+
+      // Populate kidney local XAI
+      if (bpCat === 'high') localXAI.kidney.contributing_factors.push({factor:'High BP ≥ 140', points:30, impact:'high', reason_en:'High BP is the 2nd leading cause of CKD.', reason_hi:'उच्च BP CKD का दूसरा कारण है।', reason_mr:'उच्च BP CKD चे दुसरे कारण आहे.'});
+      if (glucoseCat === 'diabetes') localXAI.kidney.contributing_factors.push({factor:'Diabetes', points:35, impact:'high', reason_en:'Diabetes is #1 cause of kidney failure.', reason_hi:'मधुमेह किडनी विफलता का पहला कारण है।', reason_mr:'मधुमेह किडनी निकामीचे पहिले कारण आहे.'});
+      if (!localXAI.kidney.contributing_factors.length) localXAI.kidney.mitigating_factors.push({factor:'Normal BP & Glucose', impact:'protective'});
+
+      renderXAI('xai-diab', localXAI.diabetes.contributing_factors, localXAI.diabetes.mitigating_factors, localXAI.diabetes.modifiable_target, currentLang);
+      renderXAI('xai-heart', localXAI.heart.contributing_factors, localXAI.heart.mitigating_factors, localXAI.heart.modifiable_target, currentLang);
+      renderXAI('xai-kidney', localXAI.kidney.contributing_factors, localXAI.kidney.mitigating_factors, localXAI.kidney.modifiable_target, currentLang);
+
       if (showFeedback) showToast(t.toastRiskCalc, false);
       confirmRiskWithServer(age, gender, bmi, bpCat, glucoseCat, activity);
     }
@@ -3195,6 +3392,18 @@
         applyServerGauge(document.getElementById('risk-badge-diab'), 'risk-title-diab', data.diabetes.pct);
         applyServerGauge(document.getElementById('risk-badge-heart'), 'risk-title-heart', data.heart.pct);
         applyServerGauge(document.getElementById('risk-badge-kidney'), 'risk-title-kidney', data.kidney.pct);
+
+        // Upgrade XAI panels with server-confirmed factor data (richer reasons from backend)
+        if (typeof renderXAI === 'function') {
+          const lang = currentLang || 'mr';
+          ['diabetes', 'heart', 'kidney'].forEach(disease => {
+            const d = data[disease];
+            if (d && d.contributing_factors) {
+              const xaiId = disease === 'diabetes' ? 'xai-diab' : disease === 'heart' ? 'xai-heart' : 'xai-kidney';
+              renderXAI(xaiId, d.contributing_factors, d.mitigating_factors || [], d.modifiable_target, lang);
+            }
+          });
+        }
         setRiskVerifyBadge('server');
       } catch (e) {
         setRiskVerifyBadge('local');
