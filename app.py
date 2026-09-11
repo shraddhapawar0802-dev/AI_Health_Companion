@@ -297,6 +297,10 @@ def parse_medical_report(raw_text):
         "gender": "",
         "date": "",
         "doctor_name": "",
+        "hospital_or_lab": "",
+        "document_type": "report",
+        "diagnosis_notes": ""
+    }
     # Patient metadata extraction
     for idx, line in enumerate(lines):
         # 1. Hospital / Lab Name
